@@ -32,17 +32,18 @@ jobs:
         env:
           SERVICE_NAME: ${{ github.event.inputs.service_name }}
           PROJECT_NAME: ${{ github.event.inputs.project_name }}
+          BASE_DIR: /tmp/${{ github.event.inputs.service_name }}
         run: ./ms-build-generator.sh
 
       - name: Restore and build generated solution
         run: |
-          pushd "${{ github.event.inputs.service_name }}"
+          pushd "/tmp/${{ github.event.inputs.service_name }}"
           dotnet restore
           dotnet build --configuration Release
           popd
 
       - name: Create ZIP artifact
-        run: zip -r "${{ github.event.inputs.service_name }}.zip" "${{ github.event.inputs.service_name }}"
+        run: zip -r "${{ github.event.inputs.service_name }}.zip" "/tmp/${{ github.event.inputs.service_name }}"
 
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
