@@ -1,0 +1,51 @@
+name: Generate and ZIP service template
+
+on:
+  workflow_dispatch:
+    inputs:
+      service_name:
+        description: 'Service name to generate'
+        required: true
+        default: 'ms_auth'
+      project_name:
+        description: 'Project display name'
+        required: true
+        default: 'UiCode Company'
+
+jobs:
+  build-and-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Make scripts executable
+        run: find . -maxdepth 1 -name '*.sh' -exec chmod +x {} \;
+
+      - name: Generate project
+        env:
+          SERVICE_NAME: ${{ github.event.inputs.service_name }}
+          PROJECT_NAME: ${{ github.event.inputs.project_name }}
+        run: ./ms-build-generator.sh
+
+      - name: Restore and build generated solution
+        run: |
+          pushd "${{ github.event.inputs.service_name }}"
+          dotnet restore
+          dotnet build --configuration Release
+          popd
+
+      - name: Create ZIP artifact
+        run: zip -r "${{ github.event.inputs.service_name }}.zip" "${{ github.event.inputs.service_name }}"
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.service_name }}-project
+          path: ${{ github.event.inputs.service_name }}.zip
