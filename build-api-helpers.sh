@@ -74,18 +74,13 @@ using AutoMapper;
 
 namespace $SERVICE_NAME.Api.Helpers
 {
-    public static class MapperConfig
+    public class MapperConfig : Profile
     {
-        # public static IMapper CreateMapper()
-        # {
-        #     var config = new MapperConfiguration(cfg =>
-        #     {
-        #         // Añade tus perfiles aquí, por ejemplo:
-        #         // cfg.AddProfile<YourDomainProfile>();
-        #     });
-
-        #     return config.CreateMapper();
-        # }
+        public MapperConfig()
+        {
+            //CreateMap<User, UserDto>();
+            //CreateMap<UserDto, User>();
+        }
     }
 }
 EOF
