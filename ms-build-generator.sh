@@ -1,8 +1,20 @@
 #!/bin/bash
 
-# Cambia este nombre si tu servicio se llama diferente
-SERVICE_NAME="ms_auth"
-PROJECT_NAME="UiCode Companie"
+# Variables de entorno desde GitHub Actions (requeridas)
+if [ -z "$SERVICE_NAME" ]; then
+  echo "❌ ERROR: SERVICE_NAME no está definido"
+  echo "   Ejecuta: SERVICE_NAME=mi_servicio PROJECT_NAME='Mi Proyecto' ./ms-build-generator.sh"
+  echo "   O usa GitHub Actions con los parámetros de entrada."
+  exit 1
+fi
+
+if [ -z "$PROJECT_NAME" ]; then
+  echo "❌ ERROR: PROJECT_NAME no está definido"
+  echo "   Ejecuta: SERVICE_NAME=mi_servicio PROJECT_NAME='Mi Proyecto' ./ms-build-generator.sh"
+  echo "   O usa GitHub Actions con los parámetros de entrada."
+  exit 1
+fi
+
 if [ -z "$BASE_DIR" ]; then
   BASE_DIR=$(pwd)/$SERVICE_NAME
 fi
