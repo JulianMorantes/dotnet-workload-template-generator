@@ -8,18 +8,22 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace $SERVICE_NAME.Api.Helpers
 {
-    public static IServiceCollection AddCoresConfigurations(this IServiceCollection services)
+    public static class CorsConfig
     {
-        var namePolice = "MsApiPolicy";
-        services.AddCors(options =>
+        public static IServiceCollection AddCoresConfigurations(this IServiceCollection services)
         {
-            options.AddPolicy(namePolice, policy => {
-                policy.WithOrigins("*")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
+            var namePolice = "MsApiPolicy";
+            services.AddCors(options =>
+            {
+                options.AddPolicy(namePolice, policy =>
+                {
+                    policy.WithOrigins("*")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
             });
-        });
-        return services;
+            return services;
+        }
     }
 }
 EOF
