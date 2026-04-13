@@ -29,8 +29,7 @@ namespace $SERVICE_NAME.Api.Helpers
 EOF
 
   cat > src/"$SERVICE_NAME.Api"/Helpers/SwaggerConfig.cs <<EOF
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 
 namespace $SERVICE_NAME.Api.Helpers
 {
@@ -77,16 +76,16 @@ namespace $SERVICE_NAME.Api.Helpers
 {
     public static class MapperConfig
     {
-        public static IMapper CreateMapper()
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                // Añade tus perfiles aquí, por ejemplo:
-                // cfg.AddProfile<YourDomainProfile>();
-            });
+        # public static IMapper CreateMapper()
+        # {
+        #     var config = new MapperConfiguration(cfg =>
+        #     {
+        #         // Añade tus perfiles aquí, por ejemplo:
+        #         // cfg.AddProfile<YourDomainProfile>();
+        #     });
 
-            return config.CreateMapper();
-        }
+        #     return config.CreateMapper();
+        # }
     }
 }
 EOF
