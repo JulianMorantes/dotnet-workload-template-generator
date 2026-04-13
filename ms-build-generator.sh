@@ -2,10 +2,13 @@
 
 # Cambia este nombre si tu servicio se llama diferente
 SERVICE_NAME="ms_auth"
-PROJECT_NAME="sstonline"
+PROJECT_NAME="UiCode Companie"
+if [ -z "$BASE_DIR" ]; then
+  BASE_DIR=$(pwd)/$SERVICE_NAME
+fi
 export SERVICE_NAME
 export PROJECT_NAME
-BASE_DIR=$(pwd)/$SERVICE_NAME
+export BASE_DIR
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 source "$SCRIPT_DIR/build-create.sh"
