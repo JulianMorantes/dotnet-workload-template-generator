@@ -1,0 +1,29 @@
+trigger: none
+
+parameters:
+  - name: microserviceName
+    type: string
+
+stages:
+- stage: CreateMicroservice
+  displayName: Crear Microservicio
+  jobs:
+  - job: Setup
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+    - checkout: none
+
+    - bash: |
+        echo "Login Azure DevOps..."
+
+        echo $(PAT_TOKEN) | az devops login
+
+        az devops configure \
+          --defaults organization=$(System.CollectionUri) \
+          project="$(System.TeamProject)"
+        
+        az repos create --name ${{ parameters.microserviceName }}  
+      displayName: Login Azure DevOps
+     
